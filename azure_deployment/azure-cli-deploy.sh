@@ -23,7 +23,7 @@ SUBNET_ID=$(az network vnet subnet show \
     --query id -o tsv)
 
 # Get ssh pub key
-SSHPUBKEY=${VALUE}
+SSHPUBKEY=$1
 
 # Get latest non-preview Kubernetes version
 VERSION=$(az aks get-versions \
