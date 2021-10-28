@@ -22,6 +22,9 @@ SUBNET_ID=$(az network vnet subnet show \
     --name $SUBNET_NAME \
     --query id -o tsv)
 
+# Get ssh pub key
+SSHPUBKEY=$1
+
 # Get latest non-preview Kubernetes version
 VERSION=$(az aks get-versions \
     --location $REGION_NAME \
@@ -45,4 +48,5 @@ az aks create \
 --vnet-subnet-id $SUBNET_ID \
 --service-cidr 10.2.0.0/24 \
 --dns-service-ip 10.2.0.10 \
---docker-bridge-address 172.17.0.1/16
+--docker-bridge-address 172.17.0.1/16 \
+--ssh-key-value $SSHPUBKEY
