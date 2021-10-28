@@ -22,6 +22,12 @@ SUBNET_ID=$(az network vnet subnet show \
     --name $SUBNET_NAME \
     --query id -o tsv)
 
+# Get latest non-preview Kubernetes version
+VERSION=$(az aks get-versions \
+    --location $REGION_NAME \
+    --query 'orchestrators[?!isPreview] | [-1].orchestratorVersion' \
+    --output tsv)
+
 # Set the AKS cluster name
 AKS_CLUSTER_NAME=aksworkshop-$RANDOM
 echo $AKS_CLUSTER_NAME
