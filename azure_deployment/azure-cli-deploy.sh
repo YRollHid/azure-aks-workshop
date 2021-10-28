@@ -22,9 +22,6 @@ SUBNET_ID=$(az network vnet subnet show \
     --name $SUBNET_NAME \
     --query id -o tsv)
 
-# Get ssh pub key
-SSHPUBKEY=$1
-
 # Get latest non-preview Kubernetes version
 VERSION=$(az aks get-versions \
     --location $REGION_NAME \
@@ -36,7 +33,6 @@ AKS_CLUSTER_NAME=aksworkshop-$RANDOM
 echo $AKS_CLUSTER_NAME
 
 # Create the AKS cluster
-# Note: create manually your SSH key pair using the following command "ssh-keygen -m PEM -t rsa -b 4096" and then add your pub key value as a variable in your AzDO pipeline.
 az aks create \
 --resource-group $RESOURCE_GROUP \
 --name $AKS_CLUSTER_NAME \
@@ -49,5 +45,4 @@ az aks create \
 --vnet-subnet-id $SUBNET_ID \
 --service-cidr 10.2.0.0/24 \
 --dns-service-ip 10.2.0.10 \
---docker-bridge-address 172.17.0.1/16 \
---ssh-key-value $SSHPUBKEY
+--docker-bridge-address 172.17.0.1/16

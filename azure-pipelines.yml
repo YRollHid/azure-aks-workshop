@@ -17,5 +17,4 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure_deployment/azure-cli-deploy.sh'
-    arguments: '$(sshPubKey)'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
