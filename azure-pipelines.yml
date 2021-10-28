@@ -17,6 +17,7 @@ steps:
   displayName: 'Deploy AKS'
   inputs:
     azureSubscription: 'AzureAksWorkShopSc'
-    scriptType: 'batch'
+    scriptType: 'bash'
     scriptLocation: 'scriptPath'
-    scriptPath: '$(Pipeline.Workspace)/drop/azure_deployment/azure-cli-deploy.sh'
+    scriptPath: 'drop/azure_deployment/azure-cli-deploy.sh'
+    workingDirectory: '$(Pipeline.Workspace)'
