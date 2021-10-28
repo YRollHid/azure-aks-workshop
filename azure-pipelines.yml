@@ -10,9 +10,6 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- publish: $(System.DefaultWorkingDirectory)
-  artifact: drop
-
 - task: AzureCLI@2
   displayName: 'Deploy AKS'
   inputs:
