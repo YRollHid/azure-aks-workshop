@@ -11,3 +11,12 @@ az acr create \
     --location $REGION_NAME \
     --name $ACR_NAME \
     --sku Standard
+
+# Build the ratings-api image
+BUILDIR=$1
+cd $BUILDIR
+
+az acr build \
+    --resource-group $RESOURCE_GROUP \
+    --registry $ACR_NAME \
+    --image ratings-api:v1 .

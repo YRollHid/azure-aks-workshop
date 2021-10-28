@@ -27,4 +27,5 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure_deployment/azure-acr-deploy.sh'
+    arguments: '$(pathRatingsAPI)'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
