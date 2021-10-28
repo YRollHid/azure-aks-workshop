@@ -17,7 +17,7 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure_deployment/azure-aks-deploy.sh'
-    arguments: '$(sshPubKey)'
+    arguments: '$(sshPubKey) $(aksClusterName)'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 
 - task: AzureCLI@2
@@ -27,5 +27,5 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure_deployment/azure-acr-deploy.sh'
-    arguments: '$(pathRatingsAPI) $(pathRatingsWeb)'
+    arguments: '$(pathRatingsAPI) $(pathRatingsWeb) $(aksClusterName)'
     workingDirectory: '$(System.DefaultWorkingDirectory)'

@@ -34,7 +34,7 @@ VERSION=$(az aks get-versions \
     --output tsv)
 
 # Set the AKS cluster name
-AKS_CLUSTER_NAME=aksworkshop-28102021
+AKS_CLUSTER_NAME=$2
 
 # Create the AKS cluster
 az aks create \

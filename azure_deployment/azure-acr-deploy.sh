@@ -35,6 +35,9 @@ az acr repository list \
     --name $ACR_NAME \
     --output table
 
+# Set the AKS cluster name
+AKS_CLUSTER_NAME=$3
+
 # Configure the AKS cluster to authenticate to the container registry
 az aks update \
     --name $AKS_CLUSTER_NAME \
