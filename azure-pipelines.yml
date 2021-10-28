@@ -21,11 +21,11 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 
 - task: AzureCLI@2
-  displayName: 'Deploy ACR'
+  displayName: 'Deploy ACR & Build images'
   inputs:
     azureSubscription: 'AzureAksWorkShopSc'
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure_deployment/azure-acr-deploy.sh'
-    arguments: '$(pathRatingsAPI)'
+    arguments: '$(pathRatingsAPI) $(pathRatingsWeb)'
     workingDirectory: '$(System.DefaultWorkingDirectory)'

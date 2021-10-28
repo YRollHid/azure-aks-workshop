@@ -13,10 +13,19 @@ az acr create \
     --sku Standard
 
 # Build the ratings-api image
-BUILDIR=$1
-cd $BUILDIR
+BUILDAPIDIR=$1
+cd $BUILDAPIDIR
 
 az acr build \
     --resource-group $RESOURCE_GROUP \
     --registry $ACR_NAME \
     --image ratings-api:v1 .
+
+# Build the ratings-web image
+BUILDWEBDIR=$2
+cd $BUILDWEBDIR
+
+az acr build \
+    --resource-group $RESOURCE_GROUP \
+    --registry $ACR_NAME \
+    --image ratings-web:v1 .
