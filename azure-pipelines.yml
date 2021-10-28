@@ -21,4 +21,4 @@ steps:
     azureSubscription: 'AzureAksWorkShopSc'
     scriptType: 'batch'
     scriptLocation: 'scriptPath'
-    scriptPath: 'azure_deployment/azure-cli-deploy.sh'
+    scriptPath: '$(Pipeline.Workspace)/drop/azure_deployment/azure-cli-deploy.sh'
