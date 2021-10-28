@@ -33,6 +33,7 @@ AKS_CLUSTER_NAME=aksworkshop-$RANDOM
 echo $AKS_CLUSTER_NAME
 
 # Create the AKS cluster
+# Note: create manually your SSH key pair using the following command "ssh-keygen -m PEM -t rsa -b 4096" and then add your pub key value as a variable in your AzDO pipeline.
 az aks create \
 --resource-group $RESOURCE_GROUP \
 --name $AKS_CLUSTER_NAME \
@@ -46,4 +47,4 @@ az aks create \
 --service-cidr 10.2.0.0/24 \
 --dns-service-ip 10.2.0.10 \
 --docker-bridge-address 172.17.0.1/16 \
---generate-ssh-keys
+--ssh-key-value $(sshPubKey)
