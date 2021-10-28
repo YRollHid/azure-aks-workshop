@@ -19,5 +19,5 @@ steps:
     azureSubscription: 'AzureAksWorkShopSc'
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
-    scriptPath: 'drop/azure_deployment/azure-cli-deploy.sh'
-    workingDirectory: '$(Pipeline.Workspace)'
+    scriptPath: 'azure_deployment/azure-cli-deploy.sh'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
