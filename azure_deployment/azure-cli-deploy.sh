@@ -5,3 +5,12 @@ SUBNET_NAME=aks-subnet
 VNET_NAME=aks-vnet
 
 az group create --name $RESOURCE_GROUP --location $REGION_NAME
+
+# Configure networking
+az network vnet create \
+    --resource-group $RESOURCE_GROUP \
+    --location $REGION_NAME \
+    --name $VNET_NAME \
+    --address-prefixes 10.0.0.0/8 \
+    --subnet-name $SUBNET_NAME \
+    --subnet-prefixes 10.240.0.0/16
