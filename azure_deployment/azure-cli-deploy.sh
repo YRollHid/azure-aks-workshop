@@ -1,3 +1,5 @@
+az upgrade -y --all --only-show-errors
+
 # Create a new resource group
 REGION_NAME=eastus2
 RESOURCE_GROUP=aksworkshop
