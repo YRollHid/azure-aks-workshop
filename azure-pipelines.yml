@@ -19,3 +19,12 @@ steps:
     scriptPath: 'azure_deployment/azure-aks-deploy.sh'
     arguments: '$(sshPubKey)'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+- task: AzureCLI@2
+  displayName: 'Deploy ACR'
+  inputs:
+    azureSubscription: 'AzureAksWorkShopSc'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: 'azure_deployment/azure-acr-deploy.sh'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
