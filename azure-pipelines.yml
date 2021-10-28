@@ -10,11 +10,10 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: PublishBuildArtifacts@1
+- task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    targetPath: $(System.DefaultWorkingDirectory)
+    artifactName: drop
 - task: AzureCLI@2
   displayName: 'Deploy AKS'
   inputs:
