@@ -29,3 +29,14 @@ az acr build \
     --resource-group $RESOURCE_GROUP \
     --registry $ACR_NAME \
     --image ratings-web:v1 .
+
+# Verify the images
+az acr repository list \
+    --name $ACR_NAME \
+    --output table
+
+# Configure the AKS cluster to authenticate to the container registry
+az aks update \
+    --name $AKS_CLUSTER_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --attach-acr $ACR_NAME
