@@ -16,6 +16,6 @@ steps:
     azureSubscription: 'AzureAksWorkShopSc'
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
-    scriptPath: 'azure_deployment/azure-cli-deploy.sh'
+    scriptPath: 'azure_deployment/azure-aks-deploy.sh'
     arguments: '$(sshPubKey)'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
