@@ -14,3 +14,10 @@ az network vnet create \
     --address-prefixes 10.0.0.0/8 \
     --subnet-name $SUBNET_NAME \
     --subnet-prefixes 10.240.0.0/16
+
+# Retrieve the subnet ID
+SUBNET_ID=$(az network vnet subnet show \
+    --resource-group $RESOURCE_GROUP \
+    --vnet-name $VNET_NAME \
+    --name $SUBNET_NAME \
+    --query id -o tsv)
