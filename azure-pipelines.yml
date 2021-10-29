@@ -51,6 +51,14 @@ stages:
     - job: 'DeployMongoDB'
       displayName: 'Deploy MongoDB'
       steps:
+      - task: Kubernetes@1
+        inputs:
+          connectionType: 'Azure Resource Manager'
+          azureSubscriptionEndpoint: 'AzureAksWorkShopSc'
+          azureResourceGroup: 'aksworkshop'
+          kubernetesCluster: 'aksworkshop-28102021'
+          command: 'create'
+          arguments: 'ns ratingsapp'
       - task: HelmDeploy@0
         displayName: 'Add Service Catalog Helm Repo'
         enabled: true
