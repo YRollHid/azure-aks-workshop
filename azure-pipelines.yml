@@ -48,6 +48,20 @@ stages:
 - stage: 'DeployContainers'
   displayName: 'Deploy Containers'
   jobs:
+    - job: 'AddHelmRepo'
+      displayName: 'Add Helm Repo'
+      steps:
+      - task: HelmDeploy@0
+        displayName: 'Add Service Catalog Helm Repo'
+        enabled: true
+        inputs:
+          connectionType: 'Azure Resource Manager'
+          azureSubscription: 'AzureAksWorkShopSc'
+          azureResourceGroup: 'aksworkshop'
+          kubernetesCluster: 'aksworkshop-28102021'
+          command: 'repo'
+          arguments: 'add bitnami https://charts.bitnami.com/bitnami'
+
     - job: 'DeployMongoDB'
       displayName: 'Deploy MongoDB'
       steps:
