@@ -103,6 +103,7 @@ stages:
 
     - job: 'DeployApiWeb'
       displayName: 'Deploy API & Web'
+      dependsOn: DeployMongoDB
       steps:
       - task: KubernetesManifest@0
         displayName: 'Deploy API & Web'
