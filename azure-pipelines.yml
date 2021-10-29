@@ -100,3 +100,14 @@ stages:
           namespace: 'ratingsapp'
           command: 'create'
           arguments: 'secret generic mongosecret --from-literal=MONGOCONNECTION="mongodb://$(mongodbuser):$(mongodbpass)@ratings-mongodb.ratingsapp:27017/ratingsdb"'
+      - task: KubernetesManifest@0
+        displayName: 'Deploy api & web'
+        inputs:
+          action: 'deploy'
+          kubernetesServiceConnection: 'K8sAksWorkshopSC'
+          namespace: 'ratingsapp'
+          manifests: |
+            manifests_deployment/ratings-api-deployment.yaml
+            manifests_deployment/ratings-api-service.yaml
+            manifests_deployment/ratings-web-deployment.yaml
+            manifests_deployment/ratings-web-service.yaml
