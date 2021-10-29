@@ -52,6 +52,7 @@ stages:
       displayName: 'Deploy MongoDB'
       steps:
       - task: Kubernetes@1
+        displayName: 'Create namespace'
         inputs:
           connectionType: 'Azure Resource Manager'
           azureSubscriptionEndpoint: 'AzureAksWorkShopSc'
