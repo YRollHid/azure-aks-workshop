@@ -9,23 +9,35 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: AzureCLI@2
+stages:
+- stage: 'DeployAKS'
   displayName: 'Deploy AKS'
-  inputs:
-    azureSubscription: 'AzureAksWorkShopSc'
-    scriptType: 'bash'
-    scriptLocation: 'scriptPath'
-    scriptPath: 'azure_deployment/azure-aks-deploy.sh'
-    arguments: '$(sshPubKey) $(aksClusterName)'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+  jobs:
+  - job: 'DeployAKS'
+    displayName: 'Deploy AKS'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Deploy AKS'
+      inputs:
+        azureSubscription: 'AzureAksWorkShopSc'
+        scriptType: 'bash'
+        scriptLocation: 'scriptPath'
+        scriptPath: 'azure_deployment/azure-aks-deploy.sh'
+        arguments: '$(sshPubKey) $(aksClusterName)'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-- task: AzureCLI@2
+- stage: 'DeployACR'
   displayName: 'Deploy ACR & Build images'
-  inputs:
-    azureSubscription: 'AzureAksWorkShopSc'
-    scriptType: 'bash'
-    scriptLocation: 'scriptPath'
-    scriptPath: 'azure_deployment/azure-acr-deploy.sh'
-    arguments: '$(pathRatingsAPI) $(pathRatingsWeb) $(aksClusterName)'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+  jobs:
+  - job: 'DeployACR'
+    displayName: 'Deploy ACR & Build images'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Deploy ACR & Build images'
+      inputs:
+        azureSubscription: 'AzureAksWorkShopSc'
+        scriptType: 'bash'
+        scriptLocation: 'scriptPath'
+        scriptPath: 'azure_deployment/azure-acr-deploy.sh'
+        arguments: '$(pathRatingsAPI) $(pathRatingsWeb) $(aksClusterName)'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
