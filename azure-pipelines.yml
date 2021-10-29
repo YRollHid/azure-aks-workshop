@@ -64,6 +64,7 @@ stages:
 
     - job: 'DeployMongoDB'
       displayName: 'Deploy MongoDB'
+      dependsOn: AddHelmRepo
       steps:
         - task: HelmDeploy@0
           inputs:
