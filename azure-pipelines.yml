@@ -56,7 +56,7 @@ stages:
           azureSubscription: 'AzureAksWorkShopSc'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: 'kubectl create namespace ratingsapp --dry-run=client -o yaml | kubectl apply -f -'
+          inlineScript: 'az aks get-credentials -g aksworkshop -n aksworkshop-28102021 --admin && kubectl create namespace ratingsapp --dry-run=client -o yaml | kubectl apply -f -'
       - task: HelmDeploy@0
         displayName: 'Add Service Catalog Helm Repo'
         enabled: true
