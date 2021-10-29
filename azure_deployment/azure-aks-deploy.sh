@@ -50,5 +50,6 @@ az aks create \
 --service-cidr 10.2.0.0/24 \
 --dns-service-ip 10.2.0.10 \
 --docker-bridge-address 172.17.0.1/16 \
+--enable-managed-identity \
 --ssh-key-value $SSHPUBKEY \
 --yes
