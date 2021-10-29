@@ -51,15 +51,12 @@ stages:
     - job: 'DeployMongoDB'
       displayName: 'Deploy MongoDB'
       steps:
-      - task: Kubernetes@1
-        displayName: 'Create namespace'
+      - task: AzureCLI@2
         inputs:
-          connectionType: 'Azure Resource Manager'
-          azureSubscriptionEndpoint: 'AzureAksWorkShopSc'
-          azureResourceGroup: 'aksworkshop'
-          kubernetesCluster: 'aksworkshop-28102021'
-          command: 'create'
-          arguments: 'ns ratingsapp'
+          azureSubscription: 'AzureAksWorkShopSc'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'kubectl create namespace ratingsapp --dry-run=client -o yaml | kubectl apply -f -'
       - task: HelmDeploy@0
         displayName: 'Add Service Catalog Helm Repo'
         enabled: true
