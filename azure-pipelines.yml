@@ -48,8 +48,8 @@ stages:
 - stage: 'DeployContainers'
   displayName: 'Deploy Containers'
   jobs:
-    - job: 'AddHelmRepo'
-      displayName: 'Add Helm Repo'
+    - job: 'DeployMongoDB'
+      displayName: 'Deploy MongoDB'
       steps:
       - task: HelmDeploy@0
         displayName: 'Add Service Catalog Helm Repo'
@@ -61,20 +61,16 @@ stages:
           kubernetesCluster: 'aksworkshop-28102021'
           command: 'repo'
           arguments: 'add bitnami https://charts.bitnami.com/bitnami'
-
-    - job: 'DeployMongoDB'
-      displayName: 'Deploy MongoDB'
-      dependsOn: AddHelmRepo
-      steps:
-        - task: HelmDeploy@0
-          inputs:
-            connectionType: 'Azure Resource Manager'
-            azureSubscription: 'AzureAksWorkShopSc'
-            azureResourceGroup: 'aksworkshop'
-            kubernetesCluster: 'aksworkshop-28102021'
-            namespace: 'ratingsapp'
-            command: 'install'
-            chartType: 'Name'
-            chartName: 'bitnami/mongodb'
-            releaseName: 'ratings'
-            overrideValues: 'auth.username=$(mongodbuser),auth.password=$(mongodbpass),auth.database=ratingsdb'
+      - task: HelmDeploy@0
+        displayName: 'Deploy MongoDB'
+        inputs:
+          connectionType: 'Azure Resource Manager'
+          azureSubscription: 'AzureAksWorkShopSc'
+          azureResourceGroup: 'aksworkshop'
+          kubernetesCluster: 'aksworkshop-28102021'
+          namespace: 'ratingsapp'
+          command: 'install'
+          chartType: 'Name'
+          chartName: 'bitnami/mongodb'
+          releaseName: 'ratings'
+          overrideValues: 'auth.username=$(mongodbuser),auth.password=$(mongodbpass),auth.database=ratingsdb'
