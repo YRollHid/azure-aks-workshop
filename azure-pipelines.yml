@@ -75,7 +75,7 @@ stages:
           azureResourceGroup: 'aksworkshop'
           kubernetesCluster: 'aksworkshop-28102021'
           namespace: 'ratingsapp'
-          command: 'install'
+          command: 'upgrade'
           chartType: 'Name'
           chartName: 'bitnami/mongodb'
           releaseName: 'ratings'
