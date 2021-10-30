@@ -159,6 +159,24 @@ stages:
       displayName: 'Deploy API & Web'
       dependsOn: DeployMongoDB
       steps:
+      - script: pip3 install jinja2-cli
+        displayName: 'Install jinja2-cli'
+
+      - script: ls -la /home/vsts/.local//lib/python3.8/site-packages/jinja2cli
+        displayName: 'Looking for jinja2cli'
+
+      - bash: |
+          echo "$(frontendIP)"
+          echo "deploy for namespace ratingsapp"
+          cd $(System.DefaultWorkingDirectory)
+          K8S_DIR=./manifests_deployment
+          mkdir -p $(targetDir)
+          echo "Expanding yaml files"
+          for f in ${K8S_DIR}/*.yaml
+          do
+            python3 /home/vsts/.local//lib/python3.8/site-packages/jinja2cli/cli.py $f --format=yaml --strict -D $(frontendIP) > "$(TARGET_DIR)/$(basename ${f})"
+          done
+        displayName: "Apply jinja variables to manifests"
       - task: Kubernetes@1
         inputs:
           connectionType: 'Azure Resource Manager'
@@ -167,6 +185,6 @@ stages:
           kubernetesCluster: '$(aksClusterName)'
           namespace: 'ratingsapp'
           command: 'apply'
-          arguments: '-f $(System.DefaultWorkingDirectory)/manifests_deployment'
+          arguments: '-f $(System.DefaultWorkingDirectory)/manifests_deployment/$(targetDir)'
       
 
