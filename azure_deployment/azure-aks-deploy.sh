@@ -51,5 +51,5 @@ az aks create \
 --dns-service-ip 10.2.0.10 \
 --docker-bridge-address 172.17.0.1/16 \
 --enable-managed-identity \
---ssh-key-value $(nodePubKey.secureFilePath) \
+--ssh-key-value $(NODEPUBKEY.SECUREFILEPATH) \
 --yes
