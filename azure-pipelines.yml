@@ -59,13 +59,14 @@ stages:
       displayName: 'Deploy MongoDB'
       steps:
       - task: AzureCLI@2
+        displayName: 'Create ns ratingsapp'
         inputs:
           azureSubscription: 'AzureAksWorkShopSc'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: 'az aks get-credentials -g aksworkshop -n aksworkshop-28102021 --admin && kubectl create namespace ratingsapp --dry-run=client -o yaml | kubectl apply -f -'
       - task: HelmDeploy@0
-        displayName: 'Add Service Catalog Helm Repo'
+        displayName: 'Add bitnami Helm Repo'
         enabled: true
         inputs:
           connectionType: 'Azure Resource Manager'
@@ -107,6 +108,40 @@ stages:
           namespace: 'ratingsapp'
           command: 'create'
           arguments: 'secret generic mongosecret --from-literal=MONGOCONNECTION="mongodb://$(mongodbuser):$(mongodbpass)@ratings-mongodb.ratingsapp:27017/ratingsdb"'
+    
+    - job: 'DeployIngress'
+      displayName: 'Deploy NGINX Ingress'
+      steps:
+      - task: AzureCLI@2
+        displayName: 'Create ns ingress'
+        inputs:
+          azureSubscription: 'AzureAksWorkShopSc'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az aks get-credentials -g aksworkshop -n aksworkshop-28102021 --admin && kubectl create namespace ingress --dry-run=client -o yaml | kubectl apply -f -'
+      - task: HelmDeploy@0
+        displayName: 'Add ingress-nginx Helm Repo'
+        enabled: true
+        inputs:
+          connectionType: 'Azure Resource Manager'
+          azureSubscription: 'AzureAksWorkShopSc'
+          azureResourceGroup: 'aksworkshop'
+          kubernetesCluster: 'aksworkshop-28102021'
+          command: 'repo'
+          arguments: 'add ingress-nginx https://kubernetes.github.io/ingress-nginx'
+      - task: HelmDeploy@0
+        displayName: 'Deploy nginx-ingress'
+        inputs:
+          connectionType: 'Azure Resource Manager'
+          azureSubscription: 'AzureAksWorkShopSc'
+          azureResourceGroup: 'aksworkshop'
+          kubernetesCluster: 'aksworkshop-28102021'
+          namespace: 'ingress'
+          command: 'upgrade'
+          chartType: 'Name'
+          chartName: 'ingress-nginx/ingress-nginx'
+          releaseName: 'nginx-ingress'
+          overrideValues: 'controller.replicaCount=2,controller.nodeSelector."beta\.kubernetes\.io/os"=linux,defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux'
 
     - job: 'DeployApiWeb'
       displayName: 'Deploy API & Web'
