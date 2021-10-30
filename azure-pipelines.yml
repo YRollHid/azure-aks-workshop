@@ -112,14 +112,14 @@ stages:
       displayName: 'Deploy API & Web'
       dependsOn: DeployMongoDB
       steps:
-      - task: KubernetesManifest@0
-        displayName: 'Deploy API & Web'
+      - task: Kubernetes@1
         inputs:
-          action: 'deploy'
-          kubernetesServiceConnection: 'K8sAksWorkshopSC'
+          connectionType: 'Azure Resource Manager'
+          azureSubscriptionEndpoint: 'AzureAksWorkShopSc'
+          azureResourceGroup: 'aksworkshop'
+          kubernetesCluster: 'aksworkshop-28102021'
           namespace: 'ratingsapp'
-          manifests: |
-            manifests_deployment/ratings-api-deployment.yaml
-            manifests_deployment/ratings-api-service.yaml
-            manifests_deployment/ratings-web-deployment.yaml
-            manifests_deployment/ratings-web-service.yaml
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/manifests_deployment'
+      
+
