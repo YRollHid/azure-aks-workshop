@@ -12,4 +12,4 @@ echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
 
 az devops configure --defaults organization=https://dev.azure.com/${AZORG} project=${AZPROJECT} --use-git-aliases true
 
-az pipelines variable update --name 'frontendIP' --value $ip
+az pipelines variable update --pipeline-name ${AZPIPENAME} --name 'frontendIP' --value $ip

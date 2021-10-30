@@ -102,6 +102,7 @@ stages:
 
     - job: 'DeployMongoDB'
       displayName: 'Deploy MongoDB'
+      dependsOn: DeployIngress
       steps:
       - task: AzureCLI@2
         displayName: 'Create ns ratingsapp'
