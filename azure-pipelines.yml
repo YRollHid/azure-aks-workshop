@@ -120,6 +120,11 @@ stages:
           kubernetesCluster: 'aksworkshop-28102021'
           namespace: 'ratingsapp'
           command: 'apply'
+          arguments: |
+             -f ratings-api-deployment.yaml
+             -f ratings-api-service.yaml
+             -f ratings-web-deployment.yaml
+             -f ratings-web-service.yaml
           workingDirectory: '$(System.DefaultWorkingDirectory)/manifests_deployment'
       
 
