@@ -33,6 +33,8 @@ stages:
         scriptPath: 'azure_deployment/azure-aks-deploy.sh'
         arguments: '$(sshPubKey) $(aksClusterName)'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
+      env:
+        nodePubKey.secureFilePath: $(nodePubKey.secureFilePath)
 
 - stage: 'DeployACR'
   displayName: 'Deploy ACR & Build images'
