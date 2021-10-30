@@ -31,7 +31,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'scriptPath'
         scriptPath: 'azure_deployment/azure-aks-deploy.sh'
-        arguments: '$(sshPubKey) $(aksClusterName)'
+        arguments: '$(nodePubKey.secureFilePath) $(aksClusterName)'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
       env:
         nodePubKey.secureFilePath: $(nodePubKey.secureFilePath)
