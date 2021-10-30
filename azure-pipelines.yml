@@ -87,7 +87,18 @@ stages:
           chartType: 'Name'
           chartName: 'ingress-nginx/ingress-nginx'
           releaseName: 'nginx-ingress'
-          overrideValues: 'controller.replicaCount=2,controller.nodeSelector."app\.kubernetes\.io/os"=linux,defaultBackend.nodeSelector."app\.kubernetes\.io/os"=linux'
+          overrideValues: 'controller.replicaCount=2,controller.nodeSelector."beta\.kubernetes\.io/os"=linux,defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux'
+      - task: AzureCLI@2
+        displayName: 'Update frontendIP var'
+        inputs:
+          azureSubscription: '$(azureSC)'
+          scriptType: 'bash'
+          scriptLocation: 'scriptPath'
+          scriptPath: 'scripts/azcli-frontend-ip-update.sh'
+          arguments: ''
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+        env:
+          AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
 
     - job: 'DeployMongoDB'
       displayName: 'Deploy MongoDB'
