@@ -174,7 +174,7 @@ stages:
           echo "Expanding yaml files"
           for f in ${K8S_DIR}/*.yaml
           do
-            python3 /home/vsts/.local//lib/python3.8/site-packages/jinja2cli/cli.py $f --format=yaml --strict -D $(frontendIP) > "$(TARGET_DIR)/$(basename ${f})"
+            python3 /home/vsts/.local//lib/python3.8/site-packages/jinja2cli/cli.py $f --format=yaml --strict -D $(frontendIP) > "$(targetDir)/$(basename ${f})"
           done
         displayName: "Apply jinja variables to manifests"
       - task: Kubernetes@1
