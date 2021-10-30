@@ -19,6 +19,11 @@ stages:
   - job: 'DeployAKS'
     displayName: 'Deploy AKS'
     steps:
+    - task: DownloadSecureFile@1
+      name: nodePubKey
+      displayName: 'Download SSH Pub Key'
+      inputs:
+        secureFile: 'azure-aks-workshop-id_rsa.pub'
     - task: AzureCLI@2
       displayName: 'Deploy AKS'
       inputs:
