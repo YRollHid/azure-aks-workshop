@@ -83,12 +83,11 @@ stages:
           azureResourceGroup: '$(aksRG)'
           kubernetesCluster: '$(aksClusterName)'
           namespace: 'cert-manager'
-          command: 'upgrade'
+          command: 'install'
           chartType: 'Name'
           chartName: 'jetstack/cert-manager'
           chartVersion: 'v1.6.0'
           releaseName: 'cert-manager'
-          overrideValues: ''
 
     - job: 'DeployIngress'
       displayName: 'Deploy NGINX Ingress'
