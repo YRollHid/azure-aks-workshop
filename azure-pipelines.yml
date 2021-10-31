@@ -163,6 +163,7 @@ stages:
         displayName: 'Tokenizer YAML files'
         inputs:
           tokenDataSource: 'environmentVariables'
+          tokenIdentifierRegex: '(*)(__)([a-zA-Z0-9\.\-_]*)(__)(*)'
           sourcePath: '$(System.DefaultWorkingDirectory)/manifests_deployment'
       - task: Kubernetes@1
         displayName: 'Deploy rattings app'
