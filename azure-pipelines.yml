@@ -75,18 +75,6 @@ stages:
           kubernetesCluster: '$(aksClusterName)'
           command: 'repo'
           arguments: 'add jetstack https://charts.jetstack.io'
-      - task: Kubernetes@1
-        displayName: 'Deploy CRD'
-        inputs:
-          connectionType: 'Azure Resource Manager'
-          azureSubscriptionEndpoint: '$(azureSC)'
-          azureResourceGroup: '$(aksRG)'
-          kubernetesCluster: '$(aksClusterName)'
-          namespace: 'cert-manager'
-          command: 'apply'
-          useConfigurationFile: true
-          configurationType: 'inline'
-          inline: 'https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.crds.yaml'
       - task: HelmDeploy@0
         displayName: 'Deploy cert-manager'
         inputs:
@@ -100,9 +88,11 @@ stages:
           chartName: 'jetstack/cert-manager'
           chartVersion: 'v1.6.0'
           releaseName: 'cert-manager'
+          overrideValues: 'installCRDs=true'
 
     - job: 'DeployIngress'
       displayName: 'Deploy NGINX Ingress'
+      dependsOn: DeployCertManager
       steps:
       - task: AzureCLI@2
         displayName: 'Create ns ingress'
