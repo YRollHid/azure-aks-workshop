@@ -55,6 +55,41 @@ stages:
 - stage: 'DeployContainers'
   displayName: 'Deploy Containers'
   jobs:
+    - job: 'DeployCertManager'
+      displayName: 'Deploy Cert-Manager'
+      steps:
+      - task: AzureCLI@2
+        displayName: 'Create ns cert-manager'
+        inputs:
+          azureSubscription: '$(azureSC)'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az aks get-credentials -g $(aksRG) -n $(aksClusterName) --admin && kubectl create namespace cert-manager --dry-run=client -o yaml | kubectl apply -f -'
+      - task: HelmDeploy@0
+        displayName: 'Add jetstack Helm Repo'
+        enabled: true
+        inputs:
+          connectionType: 'Azure Resource Manager'
+          azureSubscription: '$(azureSC)'
+          azureResourceGroup: '$(aksRG)'
+          kubernetesCluster: '$(aksClusterName)'
+          command: 'repo'
+          arguments: 'add jetstack https://charts.jetstack.io'
+      - task: HelmDeploy@0
+        displayName: 'Deploy cert-manager'
+        inputs:
+          connectionType: 'Azure Resource Manager'
+          azureSubscription: '$(azureSC)'
+          azureResourceGroup: '$(aksRG)'
+          kubernetesCluster: '$(aksClusterName)'
+          namespace: 'cert-manager'
+          command: 'upgrade'
+          chartType: 'Name'
+          chartName: 'jetstack/cert-manager'
+          chartVersion: 'v1.6.0'
+          releaseName: 'cert-manager'
+          overrideValues: ''
+
     - job: 'DeployIngress'
       displayName: 'Deploy NGINX Ingress'
       steps:
