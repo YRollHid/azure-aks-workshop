@@ -10,6 +10,9 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: ratings-web
-          servicePort: 80
+          service:
+            name: ratings-web
+            port:
+              number: 80
         path: /
+        pathType: Prefix
