@@ -88,7 +88,6 @@ stages:
           chartName: 'jetstack/cert-manager'
           chartVersion: 'v1.6.0'
           releaseName: 'cert-manager'
-          force: true
           waitForExecution: false
 
     - job: 'DeployIngress'
