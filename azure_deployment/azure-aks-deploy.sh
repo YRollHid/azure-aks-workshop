@@ -1,10 +1,12 @@
 az upgrade -y --all --only-show-errors
 
-# Create a new resource group
-REGION_NAME=eastus2
-RESOURCE_GROUP=aksworkshop
+# Set variables
+AKS_CLUSTER_NAME=${AKSCLUSTERNAME}
+REGION_NAME=${AZREGION}
+RESOURCE_GROUP=${AKSRG}
 SUBNET_NAME=aks-subnet
 VNET_NAME=aks-vnet
+SSHPUBKEY=$1
 
 az group create --name $RESOURCE_GROUP --location $REGION_NAME
 
@@ -24,17 +26,11 @@ SUBNET_ID=$(az network vnet subnet show \
     --name $SUBNET_NAME \
     --query id -o tsv)
 
-# Get ssh pub key
-SSHPUBKEY=$1
-
 # Get latest non-preview Kubernetes version
 VERSION=$(az aks get-versions \
     --location $REGION_NAME \
     --query 'orchestrators[?!isPreview] | [-1].orchestratorVersion' \
     --output tsv)
-
-# Set the AKS cluster name
-AKS_CLUSTER_NAME=$2
 
 # Create the AKS cluster
 az aks create \

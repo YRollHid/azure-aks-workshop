@@ -1,9 +1,9 @@
-# Set location name
-REGION_NAME=eastus2
-RESOURCE_GROUP=aksworkshop
+# Set variables
+AKS_CLUSTER_NAME=${AKSCLUSTERNAME}
+ACR_NAME=${ACRNAME}
+REGION_NAME=${AZREGION}
+RESOURCE_GROUP=${AKSRG}
 
-# Set an unique ACR name
-ACR_NAME=acr28102021
 
 # Create the ACR instance
 az acr create \
@@ -13,7 +13,7 @@ az acr create \
     --sku Standard
 
 # Build the ratings-api image
-BUILDAPIDIR=$1
+BUILDAPIDIR=${PATHRATINGSAPI}
 cd $BUILDAPIDIR
 
 az acr build \
@@ -22,7 +22,7 @@ az acr build \
     --image ratings-api:v1 .
 
 # Build the ratings-web image
-BUILDWEBDIR=$2
+BUILDWEBDIR=${PATHRATINGSWEB}
 cd $BUILDWEBDIR
 
 az acr build \
@@ -34,9 +34,6 @@ az acr build \
 az acr repository list \
     --name $ACR_NAME \
     --output table
-
-# Set the AKS cluster name
-AKS_CLUSTER_NAME=$3
 
 # Configure the AKS cluster to authenticate to the container registry
 az aks update \

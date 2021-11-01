@@ -31,7 +31,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'scriptPath'
         scriptPath: 'azure_deployment/azure-aks-deploy.sh'
-        arguments: '$(nodePubKey.secureFilePath) $(aksClusterName)'
+        arguments: '$(nodePubKey.secureFilePath)'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
       env:
         nodePubKey.secureFilePath: $(nodePubKey.secureFilePath)
@@ -49,7 +49,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'scriptPath'
         scriptPath: 'azure_deployment/azure-acr-deploy.sh'
-        arguments: '$(pathRatingsAPI) $(pathRatingsWeb) $(aksClusterName)'
+        arguments: ''
         workingDirectory: '$(System.DefaultWorkingDirectory)'
 
 - stage: 'DeployContainers'
